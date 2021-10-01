@@ -49,12 +49,15 @@ class BooksController < ApplicationController
 
   # DELETE /books/1 or /books/1.json
   def destroy
+    @book = Book.find(params[:id])
     @book.destroy
-    respond_to do |format|
-      format.html { redirect_to books_url, notice: "Book was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to(books_path)
   end
+
+  def delete
+    @book = Book.find(params[:id])
+  end
+end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -64,6 +67,5 @@ class BooksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def book_params
-      params.require(:book).permit(:title)
+      params.require(:book).permit(:title, :price, :author, :date)
     end
-end
